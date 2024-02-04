@@ -150,12 +150,41 @@ function showDateOptions() {
 }
 
 function handleDateOption(option) {
-  document.getElementById("dateChoice").value = "Solène chose: " + option;
-  document.getElementById("dateForm").submit();
-  document.getElementById("response").innerHTML = "You are truly amazing, I love you. 💖 Your choice: " + option;
-  document.getElementById("dateOptions").classList.add("hidden");
-  document.getElementById("dateButtons").classList.add("hidden");
+  // Prevent the default form submission
+  event.preventDefault(); // Add this line if you're calling this function from a form submit event
+
+  const dateChoiceValue = "Solène chose: " + option;
+  document.getElementById("dateChoice").value = dateChoiceValue;
+  
+  // Use fetch to submit the form data to the server without reloading the page
+  fetch("https://formspree.io/f/mvoekrdg", {
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ dateChoice: dateChoiceValue })
+  })
+  .then(response => {
+    if (response.ok) {
+      document.getElementById("response").innerHTML = "You are truly amazing, I love you. 💖 Your choice: " + option;
+      document.getElementById("dateOptions").classList.add("hidden");
+      document.getElementById("dateButtons").classList.add("hidden");
+      // Optionally, display a custom success message or perform other actions on success
+    } else {
+      // Handle server errors or display a custom error message
+      document.getElementById("response").innerHTML = "Oops, there was a problem with your submission. Please try again.";
+    }
+  })
+  .catch(error => {
+    // Handle network errors
+    document.getElementById("response").innerHTML = "There was a problem with your submission. Please check your internet connection and try again.";
+  });
+
+  // No need to submit the form traditionally
+  // document.getElementById("dateForm").submit(); - Comment this out or remove it
 }
+
 </script>
 
 </body>
