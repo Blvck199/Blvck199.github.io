@@ -27,6 +27,11 @@
 <input type="text" id="feelingInput" placeholder="How do you feel?" class="input">
 <button onclick="analyzeFeeling()">Submit</button>
 
+<!-- Playful Interaction Section -->
+<p>Who is your daddy?</p>
+<button onclick="showPlayfulResponse('You are!!!', '😊 Such sweet words!')">You are!!!</button>
+<button onclick="showPlayfulResponse('You really are my god', '💖 You make my heart swell!')">You really are my god</button>
+
 <p id="response"></p>
 <p id="valentineQuestion" class="hidden">Would you like to be my Valentine? I would like to take you somewhere nice and watch you smile. 💖</p>
 <div id="yesNoButtons" class="hidden">
@@ -101,7 +106,7 @@ function showDateOptions() {
 function askWhy() {
   if (noCount < 10) {
     const randomQuestionIndex = Math.floor(Math.random() * doubtQuestions.length);
-    document.getElementById("followUpQuestion").innerHTML = doubtQuestions[randomQuestionIndex] + " 😢 Are you sure?";
+    document.getElementById("followUpQuestion").innerHTML = doubtQuestions[randomQuestionIndex];
     document.getElementById("followUpQuestion").classList.remove("hidden");
     document.getElementById("followUpButtons").classList.remove("hidden");
     noCount++;
@@ -132,6 +137,15 @@ function handleDateOption(option) {
   document.getElementById("response").innerHTML = "You are truly amazing, I love you. 💖 Your choice: " + option;
   document.getElementById("dateOptions").classList.add("hidden");
   document.getElementById("dateButtons").classList.add("hidden");
+}
+
+// Playful response functions
+function showPlayfulResponse(message) {
+    document.getElementById("response").innerHTML = message;
+  // Display the follow-up response
+  const followUpResponseElement = document.getElementById("followUpResponse");
+  followUpResponseElement.innerHTML = followUpMessage;
+  followUpResponseElement.classList.remove("hidden");
 }
 </script>
 
