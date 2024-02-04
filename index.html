@@ -144,12 +144,6 @@ function handleFollowUpResponse(response) {
   }
 }
 
-function showDateOptions() {
-  document.getElementById("response").innerHTML = "Wonderful news, you are such a darling. 💖<br>Would you rather go to the Illusion Museum, go play pool and have drinks, or both?";
-  document.getElementById("dateOptions").classList.remove("hidden");
-  document.getElementById("dateButtons").classList.remove("hidden");
-}
-
 function handleDateOption(option) {
   document.getElementById("dateChoice").value = "Solène chose: " + option;
   document.getElementById("dateForm").submit();
