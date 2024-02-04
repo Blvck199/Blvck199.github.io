@@ -94,17 +94,17 @@ function analyzeFeeling() {
   const feelingsInput = document.getElementById("feelingInput").value.toLowerCase();
   const responseElement = document.getElementById("response");
 
-  if (feelingsInput.includes("sad") || feelingsInput.includes("bad") || feelingsInput.includes("not well") || feelingsInput.includes("in pain") || feelingsInput.includes("not good")) {
-    responseElement.innerHTML += "<br>I'm here for you, always remember that. ❤️";
-  } else if (feelingsInput.includes("happy") || feelingsInput.includes("good") || feelingsInput.includes("great")) {
-    responseElement.innerHTML += "<br>I'm so glad to hear you're feeling good! 😊";
+  // Check for negative feelings first, including handling negations properly
+  if (feelingsInput.includes("sad") || feelingsInput.includes("bad") || feelingsInput.includes("not well") || feelingsInput.includes("in pain") || feelingsInput.includes("not good") || feelingsInput.includes("terrible")) {
+    responseElement.innerHTML = "<br>I'm here for you, always remember that. ❤️";
+  } else if (feelingsInput.includes("happy") || feelingsInput.includes("good") && !feelingsInput.includes("not good") || feelingsInput.includes("great")) {
+    responseElement.innerHTML = "<br>I'm so glad to hear you're feeling good! 😊";
   } else {
-    responseElement.innerHTML += "<br>Thank you for sharing, let's make today amazing together!";
+    responseElement.innerHTML = "<br>Thank you for sharing, let's make today amazing together!";
   }
 
-  // Hide sentiment analysis section
+  // Hide sentiment analysis section and show Valentine's question
   document.getElementById("sentimentSection").classList.add("hidden");
-  // Show Valentine's question
   document.getElementById("valentineQuestion").classList.remove("hidden");
   document.getElementById("yesNoButtons").classList.remove("hidden");
 }
