@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine's Day Surprise</title>
+<title>Valentine's Day Adventure</title>
 <style>
-  /* Add your CSS styles here */
   body {
     font-family: Arial, sans-serif;
     background-color: #ffc0cb; /* Light pink background */
@@ -13,56 +12,103 @@
     text-align: center;
     padding: 50px;
   }
-  input[type="text"], button, #valentineQuestion {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  .hidden {
+    display: none;
   }
-  button {
-    background-color: #800000; /* Maroon background */
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #a52a2a; /* Darker maroon */
-  }
-  #valentineQuestion {
-    display: none; /* Hide the question initially */
-    text-align: center;
+  .sadBackground {
+    background-color: #d3d3d3; /* Grey background for a sad theme */
   }
 </style>
 </head>
 <body>
 
-<h1>Hey Solène?</h1>
-<p>How are you doing today, love?</p>
-<input type="text" id="feelingInput" placeholder="How do you feel?">
+<h1>Hey Solène!!</h1>
+<p>How are you doing today love?</p>
+<input type="text" id="feelingInput" placeholder="How do you feel?" class="input">
 <button onclick="analyzeFeeling()">Submit</button>
 
 <p id="response"></p>
-<p id="valentineQuestion">Would you like to be my Valentine? I would like to take you somewhere nice and watch you smile. 💖</p>
+<p id="valentineQuestion" class="hidden">Would you like to be my Valentine? I would like to take you somewhere nice and watch you smile. 💖</p>
+<div id="yesNoButtons" class="hidden">
+  <button onclick="handleValentineResponse('yes')">Yes</button>
+  <button onclick="handleValentineResponse('no')">No</button>
+</div>
+<p id="followUpQuestion" class="hidden"></p>
+<div id="followUpButtons" class="hidden">
+  <button onclick="handleFollowUpResponse('yes')">Yes</button>
+  <button onclick="handleFollowUpResponse('no')">No</button>
+</div>
+<p id="dateOptions" class="hidden"></p>
+<div id="dateButtons" class="hidden">
+  <button onclick="handleDateOption('illusion')">Go to the Illusion Museum</button>
+  <button onclick="handleDateOption('pool')">Play Pool and Have Drinks</button>
+  <button onclick="handleDateOption('both')">Both</button>
+</div>
+
+<!-- Formspree Form for Submitting Date Option -->
+<form id="dateForm" action="https://formspree.io/f/mvoekrdg" method="POST" class="hidden">
+  <input type="hidden" name="dateChoice" id="dateChoice">
+</form>
 
 <script>
+let noCount = 0;
+
 function analyzeFeeling() {
-  const feelingsInput = document.getElementById("feelingInput").value.toLowerCase();
-  const responseElement = document.getElementById("response");
-  const valentineQuestion = document.getElementById("valentineQuestion");
+  // Initial feeling analysis logic here
+  document.getElementById("valentineQuestion").classList.remove("hidden");
+  document.getElementById("yesNoButtons").classList.remove("hidden");
+}
 
-  if (feelingsInput.includes("happy") || feelingsInput.includes("good") || feelingsInput.includes("great")) {
-    responseElement.innerHTML = "I'm so glad to hear you're feeling good! 😊";
-  } else if (feelingsInput.includes("sad") || feelingsInput.includes("bad") || feelingsInput.includes("not well") || feelingsInput.includes("in pain") || feelingsInput.includes("not good")) {
-    responseElement.innerHTML = "I'm here for you, always remember that. ❤️";
-  } else {
-    responseElement.innerHTML = "Thank you for sharing, let's make today amazing together!";
+function handleValentineResponse(response) {
+  if (response === 'yes') {
+    document.getElementById("response").innerHTML = "Wonderful news, you are such a darling. 💖";
+    document.getElementById("dateOptions").innerHTML = "Would you rather go to the Illusion Museum, go play pool and have drinks, or both?";
+    document.getElementById("dateOptions").classList.remove("hidden");
+    document.getElementById("dateButtons").classList.remove("hidden");
+  } else if (response === 'no') {
+    askWhy();
   }
+  document.getElementById("valentineQuestion").classList.add("hidden");
+  document.getElementById("yesNoButtons").classList.add("hidden");
+}
 
-  // Show the Valentine question after the response
-  valentineQuestion.style.display = "block";
+function askWhy() {
+  if (noCount < 10) {
+    document.body.classList.add("sadBackground");
+    document.getElementById("followUpQuestion").innerHTML = "Why? 😢 Are you sure?";
+    document.getElementById("followUpQuestion").classList.remove("hidden");
+    document.getElementById("followUpButtons").classList.remove("hidden");
+    noCount++;
+  } else {
+    document.getElementById("response").innerHTML = "Okay. I am sad. 😢";
+    document.getElementById("followUpQuestion").classList.add("hidden");
+    document.getElementById("followUpButtons").classList.add("hidden");
+  }
+}
+
+function handleFollowUpResponse(response) {
+  if (response === 'no') {
+    askWhy(); // Keep asking
+  } else {
+    // Reset the flow or take another action
+    document.body.classList.remove("sadBackground");
+    document.getElementById("response").innerHTML = "I'm glad you reconsidered! 😊";
+    document.getElementById("followUpQuestion").classList.add("hidden");
+    document.getElementById("followUpButtons").classList.add("hidden");
+  }
+}
+
+function handleDateOption(option) {
+  // Set the choice in the hidden input
+  document.getElementById("dateChoice").value = "Solène chose: " + option;
+
+  // Submit the form
+  document.getElementById("dateForm").submit();
+
+  // Update the response to Solène
+  document.getElementById("response").innerHTML = "You are truly amazing, I love you. 💖 Your choice: " + option;
+  document.getElementById("dateOptions").classList.add("hidden");
+  document.getElementById("dateButtons").classList.add("hidden");
 }
 </script>
 
