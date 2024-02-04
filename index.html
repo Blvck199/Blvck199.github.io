@@ -22,8 +22,8 @@
 </head>
 <body>
 
-<h1>Hey Solène!!</h1>
-<p>How are you doing today love?</p>
+<h1>Hey Solène?</h1>
+<p>How are you doing today, love?</p>
 <input type="text" id="feelingInput" placeholder="How do you feel?" class="input">
 <button onclick="analyzeFeeling()">Submit</button>
 
@@ -35,8 +35,8 @@
 </div>
 <p id="followUpQuestion" class="hidden"></p>
 <div id="followUpButtons" class="hidden">
-  <button onclick="handleFollowUpResponse('yes')">Yes</button>
-  <button onclick="handleFollowUpResponse('no')">No</button>
+  <button onclick="handleFollowUpResponse('yes')">Actually, yes!</button>
+  <button onclick="handleFollowUpResponse('no')">No, I'm sure.</button>
 </div>
 <p id="dateOptions" class="hidden"></p>
 <div id="dateButtons" class="hidden">
@@ -52,6 +52,18 @@
 
 <script>
 let noCount = 0;
+const doubtQuestions = [
+  "Are you sure?",
+  "Are you absolutely sure?",
+  "Are you really really sure?",
+  "Totally sure, or just kinda sure?",
+  "Sure sure, or just 'meh' sure?",
+  "100% sure, or is there a teeny tiny doubt?",
+  "Absolutely positively sure, or is there wiggle room?",
+  "Beyond a shadow of a doubt sure, or 'I guess so' sure?",
+  "For-sure sure, or 'let's cross our fingers and hope' sure?",
+  "Sure as the sun rises, or more like 'sure, if it doesn't rain'?"
+];
 
 function analyzeFeeling() {
   const feelingsInput = document.getElementById("feelingInput").value.toLowerCase();
@@ -65,17 +77,13 @@ function analyzeFeeling() {
     responseElement.innerHTML = "Thank you for sharing, let's make today amazing together!";
   }
   
-  // Show the Valentine question after the response
   document.getElementById("valentineQuestion").classList.remove("hidden");
   document.getElementById("yesNoButtons").classList.remove("hidden");
 }
 
 function handleValentineResponse(response) {
   if (response === 'yes') {
-    document.getElementById("response").innerHTML = "Wonderful news, you are such a darling. 💖";
-    document.getElementById("dateOptions").innerHTML = "Would you rather go to the Illusion Museum, go play pool and have drinks, or both?";
-    document.getElementById("dateOptions").classList.remove("hidden");
-    document.getElementById("dateButtons").classList.remove("hidden");
+    showDateOptions();
   } else if (response === 'no') {
     askWhy();
   }
@@ -83,10 +91,17 @@ function handleValentineResponse(response) {
   document.getElementById("yesNoButtons").classList.add("hidden");
 }
 
+function showDateOptions() {
+  document.getElementById("response").innerHTML = "Wonderful news, you are such a darling. 💖";
+  document.getElementById("dateOptions").innerHTML = "Would you rather go to the Illusion Museum, go play pool and have drinks, or both?";
+  document.getElementById("dateOptions").classList.remove("hidden");
+  document.getElementById("dateButtons").classList.remove("hidden");
+}
+
 function askWhy() {
   if (noCount < 10) {
-    document.body.classList.add("sadBackground");
-    document.getElementById("followUpQuestion").innerHTML = "Why? 😢 Are you sure?";
+    const randomQuestionIndex = Math.floor(Math.random() * doubtQuestions.length);
+    document.getElementById("followUpQuestion").innerHTML = doubtQuestions[randomQuestionIndex] + " 😢 Are you sure?";
     document.getElementById("followUpQuestion").classList.remove("hidden");
     document.getElementById("followUpButtons").classList.remove("hidden");
     noCount++;
@@ -98,25 +113,22 @@ function askWhy() {
 }
 
 function handleFollowUpResponse(response) {
-  if (response === 'no') {
-    askWhy(); // Keep asking
-  } else {
-    // Reset the flow or take another action
+  if (response === 'yes') {
     document.body.classList.remove("sadBackground");
-    document.getElementById("response").innerHTML = "I'm glad you reconsidered! 😊";
+    document.getElementById("followUpQuestion").classList.add("hidden");
+    document.getElementById("followUpButtons").classList.add("hidden");
+    showDateOptions(); // Show date options if she reconsidered positively
+  } else {
+    // She confirmed her 'no' response, show sadness but stop asking
+    document.getElementById("response").innerHTML = "Okay, I respect your feelings. 😢";
     document.getElementById("followUpQuestion").classList.add("hidden");
     document.getElementById("followUpButtons").classList.add("hidden");
   }
 }
 
 function handleDateOption(option) {
-  // Set the choice in the hidden input
   document.getElementById("dateChoice").value = "Solène chose: " + option;
-
-  // Submit the form
   document.getElementById("dateForm").submit();
-
-  // Update the response to Solène
   document.getElementById("response").innerHTML = "You are truly amazing, I love you. 💖 Your choice: " + option;
   document.getElementById("dateOptions").classList.add("hidden");
   document.getElementById("dateButtons").classList.add("hidden");
