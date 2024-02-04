@@ -1,67 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Macpius Egelege - DevOps Engineer</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine's Day Surprise</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #ffc0cb; /* Light pink background */
+    color: #800000; /* Maroon text */
+    text-align: center;
+    padding: 50px;
+  }
+  input[type="text"] {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #800000; /* Maroon background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #a52a2a; /* Darker maroon */
+  }
+</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Macpius Egelege</h1>
-            <p>DevOps Engineer | Cloud Practitioner | Agile & Scrum Professional</p>
-        </div>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Professional summary highlighting your background in DevOps, cloud computing, and automation.</p>
-    </section>
-    <section id="experience">
-        <h2>Experience</h2>
-        <article>
-            <h3>DevOps Engineer at [Company Name]</h3>
-            <p>Dates of Employment</p>
-            <ul>
-                <li>Detail specific achievements and responsibilities, like optimizing deployment processes or implementing CI/CD pipelines.</li>
-            </ul>
-        </article>
-        <!-- Repeat for each experience -->
-    </section>
-    <section id="education">
-        <h2>Education</h2>
-        <p>BSC in Mechanical Engineering, Master's in Engineering</p>
-        <p>Certifications: AWS Cloud Practitioner, Professional Scrum Master, and more.</p>
-    </section>
-    <section id="projects">
-        <h2>Projects</h2>
-        <article>
-            <h3>Project Title</h3>
-            <p>Project description, technologies used, and your contribution.</p>
-        </article>
-        <!-- Repeat for each project -->
-    </section>
-    <section id="skills">
-        <h2>Skills</h2>
-        <p>List of skills such as Agile methodologies, AWS, CI/CD, and more.</p>
-    </section>
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Email: [Your Email]</p>
-        <p>LinkedIn: [Your LinkedIn]</p>
-    </section>
-    <footer>
-        <p>© 2024 Macpius Egelege</p>
-    </footer>
+
+<h1>Hey Solène?</h1>
+<p>How are you doing today love?</p>
+<input type="text" id="feelingInput" placeholder="How do you feel?">
+<button onclick="analyzeFeeling()">Submit</button>
+
+<p id="response"></p>
+
+<script>
+function analyzeFeeling() {
+  const feelingsInput = document.getElementById("feelingInput").value.toLowerCase();
+  const responseElement = document.getElementById("response");
+
+  if (feelingsInput.includes("happy") || feelingsInput.includes("good") || feelingsInput.includes("great")) {
+    responseElement.innerHTML = "I'm so glad to hear you're feeling good! 😊";
+  } else if (feelingsInput.includes("sad") || feelingsInput.includes("bad") || feelingsInput.includes("not well")) {
+    responseElement.innerHTML = "I'm here for you, always remember that. ❤️";
+  } else {
+    responseElement.innerHTML = "Thank you for sharing, let's make today amazing together!";
+  }
+}
+</script>
+
 </body>
 </html>
