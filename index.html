@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine's Day Surprise</title>
 <style>
+  /* Add your CSS styles here */
   body {
     font-family: Arial, sans-serif;
     background-color: #ffc0cb; /* Light pink background */
@@ -12,38 +13,45 @@
     text-align: center;
     padding: 50px;
   }
-  input[type="text"] {
+  input[type="text"], button, #valentineQuestion {
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
     border: 1px solid #ddd;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
   button {
-    padding: 10px 20px;
     background-color: #800000; /* Maroon background */
     color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
   }
   button:hover {
     background-color: #a52a2a; /* Darker maroon */
   }
+  #valentineQuestion {
+    display: none; /* Hide the question initially */
+    text-align: center;
+  }
 </style>
 </head>
 <body>
 
-<h1>Hey Solène!!!!!!</h1>
-<p>How are you doing today love?</p>
+<h1>Hey Solène?</h1>
+<p>How are you doing today, love?</p>
 <input type="text" id="feelingInput" placeholder="How do you feel?">
 <button onclick="analyzeFeeling()">Submit</button>
 
 <p id="response"></p>
+<p id="valentineQuestion">Would you like to be my Valentine? I would like to take you somewhere nice and watch you smile. 💖</p>
 
 <script>
 function analyzeFeeling() {
   const feelingsInput = document.getElementById("feelingInput").value.toLowerCase();
   const responseElement = document.getElementById("response");
+  const valentineQuestion = document.getElementById("valentineQuestion");
 
   if (feelingsInput.includes("happy") || feelingsInput.includes("good") || feelingsInput.includes("great")) {
     responseElement.innerHTML = "I'm so glad to hear you're feeling good! 😊";
@@ -52,6 +60,9 @@ function analyzeFeeling() {
   } else {
     responseElement.innerHTML = "Thank you for sharing, let's make today amazing together!";
   }
+
+  // Show the Valentine question after the response
+  valentineQuestion.style.display = "block";
 }
 </script>
 
