@@ -35,7 +35,7 @@
 
 <!-- Sentiment Analysis Section -->
 <div id="sentimentSection" class="hidden">
-  <p>How are you doing today love?</p>
+  <p>How are you doing today, love?</p>
   <input type="text" id="feelingInput" placeholder="How do you feel?" class="input">
   <button onclick="analyzeFeeling()">Submit</button>
 </div>
@@ -84,7 +84,7 @@ let noCount = 0;
 
 function handlePlayfulResponse(message) {
   const responseMessage = message === 'You are!!!' ? "😊 Such sweet words!" : "💖 You make my heart swell!";
-  document.getElementById("response").innerHTML =  responseMessage;
+  document.getElementById("response").innerHTML = "Hey Solène!! " + responseMessage;
   // Hide playful interaction and show sentiment analysis section
   document.getElementById("playfulInteraction").classList.add("hidden");
   document.getElementById("sentimentSection").classList.remove("hidden");
@@ -102,6 +102,8 @@ function analyzeFeeling() {
     responseElement.innerHTML += "<br>Thank you for sharing, let's make today amazing together!";
   }
 
+  // Hide sentiment analysis section
+  document.getElementById("sentimentSection").classList.add("hidden");
   // Show Valentine's question
   document.getElementById("valentineQuestion").classList.remove("hidden");
   document.getElementById("yesNoButtons").classList.remove("hidden");
