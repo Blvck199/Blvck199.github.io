@@ -54,7 +54,18 @@
 let noCount = 0;
 
 function analyzeFeeling() {
-  // Initial feeling analysis logic here
+  const feelingsInput = document.getElementById("feelingInput").value.toLowerCase();
+  const responseElement = document.getElementById("response");
+
+  if (feelingsInput.includes("happy") || feelingsInput.includes("good") || feelingsInput.includes("great")) {
+    responseElement.innerHTML = "I'm so glad to hear you're feeling good! 😊";
+  } else if (feelingsInput.includes("sad") || feelingsInput.includes("bad") || feelingsInput.includes("not well") || feelingsInput.includes("in pain") || feelingsInput.includes("not good")) {
+    responseElement.innerHTML = "I'm here for you, always remember that. ❤️";
+  } else {
+    responseElement.innerHTML = "Thank you for sharing, let's make today amazing together!";
+  }
+  
+  // Show the Valentine question after the response
   document.getElementById("valentineQuestion").classList.remove("hidden");
   document.getElementById("yesNoButtons").classList.remove("hidden");
 }
