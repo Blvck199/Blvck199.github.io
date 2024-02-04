@@ -23,8 +23,9 @@
 <body>
 
 <h1>Hey Solène!!</h1>
+
 <!-- Playful Interaction Section -->
-<div id="playfulSection">
+<div id="playfulInteraction" class="hidden">
   <p>Who is your daddy?</p>
   <button onclick="handlePlayfulResponse('You are!!!')">You are!!!</button>
   <button onclick="handlePlayfulResponse('You really are my god')">You really are my god</button>
@@ -32,76 +33,127 @@
 
 <p id="response" class="hidden"></p>
 
-<!-- Sentiment Analysis Section, initially hidden -->
-<div id="sentimentSection" class="hidden">
-  <p>How are you doing today, love?</p>
-  <input type="text" id="feelingInput" placeholder="How do you feel?">
-  <button onclick="analyzeFeeling()">Submit</button>
+<p>How are you doing today, love?</p>
+<input type="text" id="feelingInput" placeholder="😊 Such sweet words💖, anyway, How are you feeling?" class="input">
+<button onclick="analyzeFeeling()">Submit</button>
+
+<p id="valentineQuestion" class="hidden">Would you like to be my Valentine? I would like to take you somewhere nice and watch you smile. 💖</p>
+<div id="yesNoButtons" class="hidden">
+  <button onclick="handleValentineResponse('yes')">Yes</button>
+  <button onclick="handleValentineResponse('no')">No</button>
+</div>
+<p id="followUpQuestion" class="hidden"></p>
+<div id="followUpButtons" class="hidden">
+  <button onclick="handleFollowUpResponse('yes')">Actually, yes!</button>
+  <button onclick="handleFollowUpResponse('no')">No, I'm sure.</button>
+</div>
+<p id="dateOptions" class="hidden"></p>
+<div id="dateButtons" class="hidden">
+  <button onclick="handleDateOption('illusion')">Go to the Illusion Museum</button>
+  <button onclick="handleDateOption('pool')">Play Pool and Have Drinks</button>
+  <button onclick="handleDateOption('both')">Both</button>
 </div>
 
-<!-- Valentine Question Section, initially hidden -->
-<div id="valentineSection" class="hidden">
-  <p id="valentineQuestion">Would you like to be my Valentine? I would like to take you somewhere nice and watch you smile. 💖</p>
-  <div id="yesNoButtons">
-    <button onclick="handleValentineResponse('yes')">Yes</button>
-    <button onclick="handleValentineResponse('no')">No</button>
-  </div>
-</div>
-
-<!-- Formspree Form for Submitting Date Option, initially hidden -->
+<!-- Formspree Form for Submitting Date Option -->
 <form id="dateForm" action="https://formspree.io/f/mvoekrdg" method="POST" class="hidden">
   <input type="hidden" name="dateChoice" id="dateChoice">
 </form>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Show the playful interaction as soon as the document loads
+  document.getElementById("playfulInteraction").classList.remove("hidden");
+});
+
 let noCount = 0;
 const doubtQuestions = [
   "Are you sure?",
   "Are you absolutely sure?",
-  // Add the rest of your doubt questions here
+  "Are you really really sure?",
+  "Totally sure, or just kinda sure?",
+  "Sure sure, or just 'meh' sure?",
+  "100% sure, or is there a teeny tiny doubt?",
+  "Absolutely positively sure, or is there wiggle room?",
+  "Beyond a shadow of a doubt sure, or 'I guess so' sure?",
+  "For-sure sure, or 'let's cross our fingers and hope' sure?",
+  "Sure as the sun rises, or more like 'sure, if it doesn't rain'?"
 ];
 
-function handlePlayfulResponse(playfulResponse) {
-  document.getElementById("response").innerHTML = playfulResponse + " 😊 Such sweet words!";
-  document.getElementById("playfulSection").classList.add("hidden");
-  document.getElementById("sentimentSection").classList.remove("hidden");
+function handlePlayfulResponse(message) {
+  document.getElementById("response").innerHTML = message + " 😊 Such sweet words!";
+  document.getElementById("playfulInteraction").classList.add("hidden");
+  document.getElementById("response").classList.remove("hidden");
+  // Directly ask how she's doing today, allowing the rest of the flow to proceed.
 }
 
 function analyzeFeeling() {
   const feelingsInput = document.getElementById("feelingInput").value.toLowerCase();
   const responseElement = document.getElementById("response");
-  
+
   if (feelingsInput.includes("happy") || feelingsInput.includes("good") || feelingsInput.includes("great")) {
     responseElement.innerHTML = "I'm so glad to hear you're feeling good! 😊";
-  } else if (feelingsInput.includes("sad") || feelingsInput.includes("bad") || feelingsInput.includes("not well")) {
+  } else if (feelingsInput.includes("sad") || feelingsInput.includes("bad") || feelingsInput.includes("not well") || feelingsInput.includes("in pain") || feelingsInput.includes("not good")) {
     responseElement.innerHTML = "I'm here for you, always remember that. ❤️";
   } else {
     responseElement.innerHTML = "Thank you for sharing, let's make today amazing together!";
   }
   
-  // Show the Valentine question section after the sentiment analysis
-  document.getElementById("valentineSection").classList.remove("hidden");
-  document.getElementById("sentimentSection").classList.add("hidden"); // Optionally hide the sentiment section
+  document.getElementById("valentineQuestion").classList.remove("hidden");
+  document.getElementById("yesNoButtons").classList.remove("hidden");
 }
 
 function handleValentineResponse(response) {
-  const responseElement = document.getElementById("response");
-  document.getElementById("valentineSection").classList.add("hidden"); // Hide Valentine question section
-
   if (response === 'yes') {
-    responseElement.innerHTML = "Wonderful news, you are such a darling. 💖";
-    // Logic to handle showing date options goes here
-    // Show the form or another method to select the date option
-  } else if (response === 'no' && noCount < 10) {
-    responseElement.innerHTML = doubtQuestions[noCount++];
-    // Optionally, loop through or modify the logic to handle multiple "no" responses
-    document.getElementById("valentineSection").classList.remove("hidden"); // Optionally show again for re-asking
+    showDateOptions();
+  } else if (response === 'no') {
+    askWhy();
+  }
+  document.getElementById("valentineQuestion").classList.add("hidden");
+  document.getElementById("yesNoButtons").classList.add("hidden");
+}
+
+function showDateOptions() {
+  document.getElementById("response").innerHTML = "Wonderful news, you are such a darling. 💖";
+  document.getElementById("dateOptions").innerHTML = "Would you rather go to the Illusion Museum, go play pool and have drinks, or both?";
+  document.getElementById("dateOptions").classList.remove("hidden");
+  document.getElementById("dateButtons").classList.remove("hidden");
+}
+
+function askWhy() {
+  if (noCount < 10) {
+    const randomQuestionIndex = Math.floor(Math.random() * doubtQuestions.length);
+    document.getElementById("followUpQuestion").innerHTML = doubtQuestions[randomQuestionIndex] + " 😢 Are you sure?";
+    document.getElementById("followUpQuestion").classList.remove("hidden");
+    document.getElementById("followUpButtons").classList.remove("hidden");
+    noCount++;
   } else {
-    responseElement.innerHTML = "Okay. I am sad. 😢";
+    document.getElementById("response").innerHTML = "Okay. I am sad. 😢";
+    document.getElementById("followUpQuestion").classList.add("hidden");
+    document.getElementById("followUpButtons").classList.add("hidden");
   }
 }
 
-// Additional functions for handling date options, follow-up responses, etc., should go here.
+function handleFollowUpResponse(response) {
+  if (response === 'yes') {
+    document.body.classList.remove("sadBackground");
+    document.getElementById("followUpQuestion").classList.add("hidden");
+    document.getElementById("followUpButtons").classList.add("hidden");
+    showDateOptions(); // Show date options if she reconsidered positively
+  } else {
+    // She confirmed her 'no' response, show sadness but stop asking
+    document.getElementById("response").innerHTML = "Okay, I respect your feelings. 😢";
+    document.getElementById("followUpQuestion").classList.add("hidden");
+    document.getElementById("followUpButtons").classList.add("hidden");
+  }
+}
+
+function handleDateOption(option) {
+  document.getElementById("dateChoice").value = "Solène chose: " + option;
+  document.getElementById("dateForm").submit();
+  document.getElementById("response").innerHTML = "You are truly amazing, I love you. 💖 Your choice: " + option;
+  document.getElementById("dateOptions").classList.add("hidden");
+  document.getElementById("dateButtons").classList.add("hidden");
+}
 </script>
 
 </body>
