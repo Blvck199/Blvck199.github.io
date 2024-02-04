@@ -122,7 +122,7 @@ function handleValentineResponse(response) {
 
 function askWhy() {
   if (noCount < 10) {
-    document.getElementById("followUpQuestion").innerHTML = doubtQuestions[noCount++] + " 😢 Are you sure?";
+    document.getElementById("followUpQuestion").innerHTML = doubtQuestions[noCount++];
     document.getElementById("followUpQuestion").classList.remove("hidden");
     document.getElementById("followUpButtons").classList.remove("hidden");
   } else {
