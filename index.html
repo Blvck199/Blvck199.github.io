@@ -84,7 +84,7 @@ let noCount = 0;
 
 function handlePlayfulResponse(message) {
   const responseMessage = message === 'You are!!!' ? "😊 Such sweet words!" : "💖 You make my heart swell!";
-  document.getElementById("response").innerHTML = "Hey Solène!! " + responseMessage;
+  document.getElementById("response").innerHTML = responseMessage;
   // Hide playful interaction and show sentiment analysis section
   document.getElementById("playfulInteraction").classList.add("hidden");
   document.getElementById("sentimentSection").classList.remove("hidden");
@@ -95,16 +95,15 @@ function analyzeFeeling() {
   const responseElement = document.getElementById("response");
 
   if (feelingsInput.includes("happy") || feelingsInput.includes("good") || feelingsInput.includes("great")) {
-    responseElement.innerHTML = "I'm so glad to hear you're feeling good! 😊";
+    responseElement.innerHTML += "<br>I'm so glad to hear you're feeling good! 😊";
   } else if (feelingsInput.includes("sad") || feelingsInput.includes("bad") || feelingsInput.includes("not well") || feelingsInput.includes("in pain") || feelingsInput.includes("not good")) {
-    responseElement.innerHTML = "I'm here for you, always remember that. ❤️";
+    responseElement.innerHTML += "<br>I'm here for you, always remember that. ❤️";
   } else {
-    responseElement.innerHTML = "Thank you for sharing, let's make today amazing together!";
+    responseElement.innerHTML += "<br>Thank you for sharing, let's make today amazing together!";
   }
 
-  // Hide sentiment analysis section and clear input field
+  // Hide sentiment analysis section
   document.getElementById("sentimentSection").classList.add("hidden");
-  document.getElementById("feelingInput").value = "";
   // Show Valentine's question
   document.getElementById("valentineQuestion").classList.remove("hidden");
   document.getElementById("yesNoButtons").classList.remove("hidden");
@@ -123,7 +122,7 @@ function handleValentineResponse(response) {
 
 function askWhy() {
   if (noCount < 10) {
-    document.getElementById("followUpQuestion").innerHTML = doubtQuestions[noCount++] + " 😢 Are you sure?";
+    document.getElementById("followUpQuestion").innerHTML = doubtQuestions[noCount++];
     document.getElementById("followUpQuestion").classList.remove("hidden");
     document.getElementById("followUpButtons").classList.remove("hidden");
   } else {
@@ -142,6 +141,12 @@ function handleFollowUpResponse(response) {
   } else {
     document.getElementById("response").innerHTML += "<br>Okay, I respect your feelings. 😢";
   }
+}
+
+function showDateOptions() {
+  document.getElementById("response").innerHTML = "Wonderful news, you are such a darling. 💖<br>Would you rather go to the Illusion Museum, go play pool and have drinks, or both?";
+  document.getElementById("dateOptions").classList.remove("hidden");
+  document.getElementById("dateButtons").classList.remove("hidden");
 }
 
 function handleDateOption(option) {
